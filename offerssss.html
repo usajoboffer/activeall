@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURELIA DIGITAL — Institutional Performance Marketing & Media Buying</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-void: #020408;
+      --bg-surface: #070b14;
+      --bg-card: rgba(11, 16, 28, 0.72);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(232, 196, 104, 0.45);
+      --gold-200: #f8e3a1;
+      --gold-400: #e5bd55;
+      --gold-600: #b08222;
+      --emerald: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    ::selection { background: rgba(229, 189, 85, 0.3); color: #fff; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background: rgba(229, 189, 85, 0.28); border-radius: 999px; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .font-display { font-family: 'Outfit', sans-serif; }
+    .font-serif-italic { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+
+    .ambient-backdrop {
+      position: fixed; inset: 0; z-index: -3; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% -5%, rgba(229, 189, 85, 0.095), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 88% 12%, rgba(56, 189, 248, 0.065), transparent 60%),
+        radial-gradient(ellipse 55% 50% at 50% 105%, rgba(16, 185, 129, 0.05), transparent 65%);
+    }
+
+    .grid-architecture {
+      position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+      background-size: 68px 68px;
+      mask-image: radial-gradient(ellipse at 50% 25%, black 25%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 25%, black 25%, transparent 80%);
+    }
+
+    .grain-overlay {
+      position: fixed; inset: 0; z-index: -1; opacity: 0.03; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    .text-gold {
+      background: linear-gradient(135deg, #fffdf5 0%, #f8e3a1 40%, #c8962e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* Modern Buttons */
+    .btn-modern-gold {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 30px; border-radius: 999px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.95rem;
+      color: #07080c; background: linear-gradient(135deg, #fbf0c4 0%, #e5bd55 52%, #bc8b24 100%);
+      border: 1px solid rgba(255, 255, 255, 0.45); text-decoration: none; cursor: pointer; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+      box-shadow: 0 12px 34px -8px rgba(229, 189, 85, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.75);
+    }
+    .btn-modern-gold::before {
+      content: ""; position: absolute; top: 0; left: -120%; width: 70%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+      transform: skewX(-25deg); transition: left 0.65s ease;
+    }
+    .btn-modern-gold:hover { transform: translateY(-2.5px) scale(1.015); box-shadow: 0 20px 44px -6px rgba(229, 189, 85, 0.68); }
+    .btn-modern-gold:hover::before { left: 150%; }
+    .btn-modern-gold:active { transform: scale(0.97); }
+
+    .btn-modern-glass {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 28px; border-radius: 999px; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem;
+      color: var(--text-main); background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(16px); text-decoration: none; cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-modern-glass:hover {
+      background: rgba(255, 255, 255, 0.085); border-color: rgba(229, 189, 85, 0.55); color: #fff;
+      transform: translateY(-2.5px); box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-card-action {
+      display: inline-flex; align-items: center; justify-content: space-between; width: 100%;
+      padding: 12px 18px; margin-top: 22px; border-radius: 14px; font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem; font-weight: 600; color: var(--gold-200); background: rgba(229, 189, 85, 0.06);
+      border: 1px solid rgba(229, 189, 85, 0.2); text-decoration: none; cursor: pointer; transition: all 0.28s ease;
+    }
+    .btn-card-action:hover { background: rgba(229, 189, 85, 0.14); border-color: rgba(229, 189, 85, 0.55); color: #fff; }
+
+    /* Navbar */
+    nav {
+      position: sticky; top: 0; z-index: 60; background: rgba(2, 4, 8, 0.78);
+      backdrop-filter: blur(22px); border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 82px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: 0.06em; }
+    .brand-emblem {
+      width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #fbf0c4, #b08222);
+      display: grid; place-items: center; color: #05070d; font-weight: 900; font-size: 1.15rem;
+      box-shadow: 0 0 28px rgba(229, 189, 85, 0.35);
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+
+    /* Hero */
+    .hero { padding: 88px 0 84px; }
+    .hero-grid { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 64px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; border-radius: 999px;
+      background: rgba(229, 189, 85, 0.08); border: 1px solid rgba(229, 189, 85, 0.26);
+      color: var(--gold-200); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 26px;
+    }
+    .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 12px var(--emerald); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(1.4); } }
+    .hero h1 { font-size: clamp(2.7rem, 5vw, 4.45rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.028em; margin-bottom: 24px; }
+    .hero p { font-size: 1.12rem; color: var(--text-muted); max-width: 550px; margin-bottom: 36px; }
+    .hero-cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
+    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 30px; border-top: 1px solid var(--border-subtle); }
+    .stat-num { font-family: 'Outfit', sans-serif; font-size: 1.9rem; font-weight: 800; }
+    .stat-lbl { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Telemetry Card */
+    .telemetry-shell {
+      border-radius: 28px; padding: 1.5px;
+      background: linear-gradient(145deg, rgba(229, 189, 85, 0.42), rgba(255, 255, 255, 0.08), rgba(56, 189, 248, 0.25));
+      box-shadow: 0 35px 90px -20px rgba(0, 0, 0, 0.9), 0 0 60px -15px rgba(229, 189, 85, 0.16);
+    }
+    .telemetry-card { background: linear-gradient(165deg, #0b101d 0%, #060911 100%); border-radius: 27px; padding: 30px; }
+    .telemetry-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+    .verified-badge {
+      display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px;
+      background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; font-size: 0.72rem; font-weight: 700;
+    }
+    .chart-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 16px 18px 10px; margin-bottom: 20px; }
+    .channel-bars { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+    .ch-row { background: rgba(255, 255, 255, 0.025); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 12px 15px; }
+    .ch-meta { display: flex; justify-content: space-between; font-size: 0.84rem; margin-bottom: 7px; }
+    .ch-track { height: 5px; background: rgba(255, 255, 255, 0.07); border-radius: 999px; overflow: hidden; }
+    .ch-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #b08222, #fbf0c4); }
+
+    /* Tech Strip */
+    .tech-strip { border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.015); padding: 26px 0; }
+    .strip-flex { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .strip-title { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-dim); font-weight: 700; }
+    .stack-list { display: flex; flex-wrap: wrap; gap: 34px; align-items: center; }
+    .stack-item { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.98rem; color: #64748b; letter-spacing: 0.05em; }
+
+    /* Sections & Cards */
+    .section { padding: 100px 0; }
+    .section-head { text-align: center; max-width: 690px; margin: 0 auto 60px; }
+    .section-head h2 { font-size: clamp(2.1rem, 3.8vw, 3.1rem); font-weight: 800; margin-bottom: 16px; line-height: 1.1; }
+    .section-head p { color: var(--text-muted); font-size: 1.06rem; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .spotlight-card {
+      position: relative; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 24px;
+      padding: 32px 28px; backdrop-filter: blur(20px); display: flex; flex-direction: column; justify-content: space-between;
+      overflow: hidden; transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .spotlight-card::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(229, 189, 85, 0.14), transparent 45%);
+      opacity: 0; transition: opacity 0.35s ease; pointer-events: none;
+    }
+    .spotlight-card:hover::before { opacity: 1; }
+    .spotlight-card:hover { border-color: var(--border-gold); transform: translateY(-5px); }
+    .icon-box { width: 52px; height: 52px; border-radius: 15px; background: rgba(229, 189, 85, 0.08); border: 1px solid rgba(229, 189, 85, 0.25); display: grid; place-items: center; color: var(--gold-200); margin-bottom: 22px; }
+    .spotlight-card h3 { font-size: 1.28rem; margin-bottom: 10px; }
+    .spotlight-card p { font-size: 0.94rem; color: var(--text-muted); margin-bottom: 18px; }
+    .pill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .p-tag { font-size: 0.74rem; padding: 4px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); color: #cbd5e1; }
+
+    /* Sponsored Partner Slot (Transparent Ad Unit) */
+    .sponsored-banner {
+      background: linear-gradient(135deg, rgba(229, 189, 85, 0.11), rgba(11, 16, 28, 0.92));
+      border: 1px solid rgba(229, 189, 85, 0.35);
+      border-radius: 22px; padding: 26px 32px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    .ad-tag {
+      display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold-400); background: rgba(229, 189, 85, 0.12);
+      border: 1px solid rgba(229, 189, 85, 0.3); padding: 3px 10px; border-radius: 999px; margin-bottom: 8px;
+    }
+
+    /* Case Panel */
+    .case-panel { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 42px; backdrop-filter: blur(20px); }
+    .tabs-bar { display: flex; flex-wrap: wrap; gap: 10px; padding-bottom: 24px; margin-bottom: 34px; border-bottom: 1px solid var(--border-subtle); }
+    .tab-pill {
+      padding: 10px 20px; border-radius: 999px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle);
+      color: var(--text-muted); font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease;
+    }
+    .tab-pill.active { background: linear-gradient(135deg, rgba(229, 189, 85, 0.18), rgba(229, 189, 85, 0.06)); border-color: rgba(229, 189, 85, 0.5); color: var(--gold-200); }
+    .case-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 44px; align-items: center; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .kpi-card { background: rgba(255, 255, 255, 0.025); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 22px; }
+    .kpi-card .num { font-family: 'Outfit', sans-serif; font-size: 2.05rem; font-weight: 800; margin-bottom: 4px; }
+    .kpi-card .desc { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Quotes */
+    .quotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .quote-box { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+    .quote-box p { color: #e2e8f0; font-size: 0.95rem; margin-bottom: 24px; }
+    .person-meta { display: flex; align-items: center; gap: 12px; }
+    .avatar-ring { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #1e293b, #090d16); border: 1px solid var(--border-gold); display: grid; place-items: center; font-weight: 700; color: var(--gold-200); font-size: 0.9rem; }
+
+    /* CTA & Footer */
+    .cta-banner {
+      background: linear-gradient(145deg, rgba(229, 189, 85, 0.09) 0%, rgba(11, 16, 28, 0.95) 60%);
+      border: 1px solid rgba(229, 189, 85, 0.3); border-radius: 30px; padding: 64px 48px; text-align: center;
+    }
+    .cta-banner h2 { font-size: clamp(2rem, 3.8vw, 3rem); margin-bottom: 16px; }
+    .cta-banner p { color: var(--text-muted); max-width: 600px; margin: 0 auto 34px; font-size: 1.06rem; }
+
+    footer { border-top: 1px solid var(--border-subtle); padding: 56px 0 38px; color: var(--text-dim); font-size: 0.86rem; }
+    .footer-flex { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px; margin-bottom: 32px; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 26px; }
+    .footer-nav a { color: var(--text-muted); text-decoration: none; }
+    .footer-nav a:hover { color: var(--gold-200); }
+
+    /* Sponsored Ad Modal (On Page Load) */
+    .ad-interstitial-backdrop {
+      position: fixed; inset: 0; z-index: 120; background: rgba(2, 4, 8, 0.84);
+      backdrop-filter: blur(14px); display: none; place-items: center; padding: 20px;
+    }
+    .ad-interstitial-backdrop.open { display: grid; }
+    .ad-modal-card {
+      width: 100%; max-width: 480px; background: linear-gradient(160deg, #0e1526 0%, #070a12 100%);
+      border: 1px solid rgba(229, 189, 85, 0.45); border-radius: 28px; padding: 34px 30px;
+      text-align: center; position: relative; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
+    }
+    .ad-close-btn {
+      position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14); color: #fff; padding: 6px 12px;
+      border-radius: 999px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    }
+
+    /* Subpage View */
+    #subpage-view { display: none; min-height: 100vh; }
+    .subpage-hero { padding: 74px 0 54px; border-bottom: 1px solid var(--border-subtle); }
+    .subpage-body { padding: 64px 0 100px; }
+    .sub-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .form-card { background: var(--bg-card); border: 1px solid rgba(229, 189, 85, 0.28); border-radius: 26px; padding: 40px; }
+    .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .f-group { display: flex; flex-direction: column; gap: 8px; }
+    .f-group.full { grid-column: span 2; }
+    label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+    input, select, textarea { width: 100%; padding: 13px 16px; background: rgba(2, 4, 8, 0.85); border: 1px solid var(--border-subtle); border-radius: 12px; color: #fff; font-family: inherit; outline: none; }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .services-grid, .case-layout, .quotes-grid, .sub-grid-2 { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero { padding: 54px 0 60px; }
+      .f-grid { grid-template-columns: 1fr; }
+      .f-group.full { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-backdrop"></div>
+  <div class="grid-architecture"></div>
+  <div class="grain-overlay"></div>
+
+  <!-- ================= MAIN LANDING VIEW ================= -->
+  <div id="home-view">
+    <nav>
+      <div class="container nav-inner">
+        <a href="?" class="brand">
+          <div class="brand-emblem">A</div>
+          <span>AURELIA <span style="font-weight:400; color:#94a3b8; font-size:0.9rem;">DIGITAL</span></span>
+        </a>
+
+        <div class="nav-links">
+          <a href="?page=capabilities" target="_blank" rel="noopener">Capabilities ↗</a>
+          <a href="?page=case-studies" target="_blank" rel="noopener">Case Studies ↗</a>
+          <a href="?page=media-kit" target="_blank" rel="noopener">Media Kit ↗</a>
+          <a href="?page=compliance" target="_blank" rel="noopener">Compliance ↗</a>
+        </div>
+
+        <a href="?page=partnership" target="_blank" rel="noopener" class="btn-modern-gold" style="padding: 11px 22px; font-size: 0.88rem;">
+          Partner With Us ↗
+        </a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse-dot"></span> Tier-1 Performance Media Buying Agency</div>
+          <h1>Precision <span class="text-gold font-serif-italic">High-Intent</span><br>Customer Acquisition</h1>
+          <p>Aurelia Digital partners with elite affiliate networks and direct brands to scale compliant, measurable CPA and CPL customer acquisition across global Tier-1 paid channels.</p>
+
+          <div class="hero-cta-row">
+            <a href="?page=partnership" target="_blank" rel="noopener" class="btn-modern-gold">Start Partnership Inquiry ↗</a>
+            <a href="?page=media-kit" target="_blank" rel="noopener" class="btn-modern-glass">View Agency Media Kit ↗</a>
+          </div>
+
+          <div class="hero-stats">
+            <div><div class="stat-num text-gold">$4.8M+</div><div class="stat-lbl">Annual Managed Ad Spend</div></div>
+            <div><div class="stat-num">180K+</div><div class="stat-lbl">Monthly Verified Actions</div></div>
+            <div><div class="stat-num">100%</div><div class="stat-lbl">Policy & Brand Safe</div></div>
+          </div>
+        </div>
+
+        <div class="telemetry-shell">
+          <div class="telemetry-card">
+            <div class="telemetry-head">
+              <div>
+                <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em;">Live Attribution Desk</div>
+                <div style="font-family:'Outfit',sans-serif; font-weight:700; font-size:1.15rem;">Channel Volume & Quality</div>
+              </div>
+              <div class="verified-badge"><span class="pulse-dot" style="width:6px;height:6px;"></span> S2S ACTIVE</div>
+            </div>
+
+            <div class="chart-box">
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:var(--text-muted); margin-bottom:6px;">
+                <span>Conversion Efficiency Index (90D)</span>
+                <span style="color:#34d399; font-weight:700;">+28.4% YoY</span>
+              </div>
+              <svg viewBox="0 0 360 85" width="100%" height="75" fill="none">
+                <defs>
+                  <linearGradient id="goldArea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#e5bd55" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#e5bd55" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0 70 C40 62, 65 48, 105 52 C145 56, 175 30, 215 34 C255 38, 295 16, 360 8 L360 85 L0 85 Z" fill="url(#goldArea)"/>
+                <path d="M0 70 C40 62, 65 48, 105 52 C145 56, 175 30, 215 34 C255 38, 295 16, 360 8" stroke="#f8e3a1" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="360" cy="8" r="4" fill="#10b981"/>
+              </svg>
+            </div>
+
+            <div class="channel-bars">
+              <div class="ch-row">
+                <div class="ch-meta"><span><strong>Search Intent</strong> (Google / Bing)</span><span class="text-gold" style="font-weight:700;">42%</span></div>
+                <div class="ch-track"><div class="ch-fill" style="width:42%;"></div></div>
+              </div>
+              <div class="ch-row">
+                <div class="ch-meta"><span><strong>Paid Social</strong> (Meta / TikTok)</span><span class="text-gold" style="font-weight:700;">34%</span></div>
+                <div class="ch-track"><div class="ch-fill" style="width:34%;"></div></div>
+              </div>
+              <div class="ch-row">
+                <div class="ch-meta"><span><strong>Native Editorial</strong> (Taboola / Outbrain)</span><span class="text-gold" style="font-weight:700;">24%</span></div>
+                <div class="ch-track"><div class="ch-fill" style="width:24%;"></div></div>
+              </div>
+            </div>
+
+            <a href="?page=capabilities" target="_blank" rel="noopener" class="btn-card-action">
+              <span>Inspect Full Channel Capabilities</span><span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="tech-strip">
+      <div class="container strip-flex">
+        <div class="strip-title">Tracking & Buying Infrastructure</div>
+        <div class="stack-list">
+          <span class="stack-item">VOLUUM</span>
+          <span class="stack-item">REDTRACK</span>
+          <span class="stack-item">EVERFLOW</span>
+          <span class="stack-item">GOOGLE ADS</span>
+          <span class="stack-item">META CAPI</span>
+          <span class="stack-item">TABOOLA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transparent Sponsored Ad Banner -->
+    <section style="padding: 46px 0 0;">
+      <div class="container">
+        <div class="sponsored-banner reveal">
+          <div>
+            <div class="ad-tag">Sponsored Network Partner</div>
+            <h3 style="font-size:1.35rem; margin-bottom:4px;">Featured Partner Program & Direct Ad Solutions</h3>
+            <p style="color:var(--text-muted); font-size:0.92rem;">Visit our featured sponsored partner portal for direct network access and campaign opportunities.</p>
+          </div>
+          <a href="https://auctionr.org/4/9a1f38d0a12dbfda18e8807a25343045" target="_blank" rel="noopener noreferrer" class="btn-modern-gold">
+            Visit Sponsored Partner ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- All 6 Services -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Acquisition <span class="text-gold font-serif-italic">Capabilities</span></h2>
+          <p>Dedicated media buying pods engineered for transparent, brand-safe performance scaling across Tier-1 geographies.</p>
+        </div>
+
+        <div class="services-grid">
+          <div class="spotlight-card reveal">
+            <div>
+              <div class="icon-box">🔍</div>
+              <h3>Paid Search & High-Intent PPC</h3>
+              <p>Capturing high-intent search queries across Google and Microsoft Ads with strict brand-bidding exclusions and compliant pre-landers.</p>
+              <div class="pill-tags"><span class="p-tag">Google Search</span><span class="p-tag">Microsoft Ads</span><span class="p-tag">Exact Intent</span></div>
+            </div>
+            <a href="?page=capabilities" target="_blank" rel="noopener" class="btn-card-action"><span>Explore Search Specs</span><span>↗</span></a>
+          </div>
+
+          <div class="spotlight-card reveal">
+            <div>
+              <div class="icon-box">📈</div>
+              <h3>Paid Social Acquisition</h3>
+              <p>Creative-led scaling across Meta, TikTok, and YouTube Shorts backed by in-house UGC production and server-side Conversion APIs.</p>
+              <div class="pill-tags"><span class="p-tag">Meta CAPI</span><span class="p-tag">TikTok Ads</span><span class="p-tag">UGC Studio</span></div>
+            </div>
+            <a href="?page=capabilities" target="_blank" rel="noopener" class="btn-card-action"><span>Explore Social Specs</span><span>↗</span></a>
+          </div>
+
+          <div class="spotlight-card reveal">
+            <div>
+              <div class="icon-box">📰</div>
+              <h3>Native & Editorial Funnels</h3>
+              <p>Long-form advertorials, consumer comparison hubs, and quiz qualification flows running on Taboola, Outbrain, and premium publishers.</p>
+              <div class="pill-tags"><span class="p-tag">Taboola</span><span class="p-tag">Outbrain</span><span class="p-tag">Advertorials</span></div>
+            </div>
+            <a href="?page=capabilities" target="_blank" rel="noopener" class="btn-card-action"><span>Explore Native Specs</span><span>↗</span></a>
+          </div>
+
+          <div class="spotlight-card reveal">
+            <div>
+              <div class="icon-box">⚡</div>
+              <h3>CRO & Funnel Engineering</h3>
+              <p>Custom edge-cached landing pages with sub-second load speeds and continuous multivariate split testing to maximize backend LTV.</p>
+              <div class="pill-tags"><span class="p-tag">Split Testing</span><span class="p-tag">Edge Hosting</span><span class="p-tag">High CVR</span></div>
+            </div>
+            <a href="?page=case-studies" target="_blank" rel="noopener" class="btn-card-action"><span>View Funnel Benchmarks</span><span>↗</span></a>
+          </div>
+
+          <div class="spotlight-card reveal">
+            <div>
+              <div class="icon-box">✉️</div>
+              <h3>Opt-In CRM & Retention</h3>
+              <p>First-party CAN-SPAM and GDPR compliant subscriber monetization using authenticated domains, clean warmups, and segmented flows.</p>
+              <div class="pill-tags"><span class="p-tag">1st-Party Opt-In</span><span class="p-tag">DMARC / DKIM</span><span class="p-tag">Lifecycle</span></div>
+            </div>
+            <a href="?page=compliance" target="_blank" rel="noopener" class="btn-card-action"><span>Review Email Compliance</span><span>↗</span></a>
+          </div>
+
+          <div class="spotlight-card reveal">
+            <div>
+              <div class="icon-box">🛡️</div>
+              <h3>Brand Safety & Anti-Fraud</h3>
+              <p>Zero-incentive policy enforcement, automated bot scrubbing, and pre-launch compliance sign-off protecting every advertiser partner.</p>
+              <div class="pill-tags"><span class="p-tag">Zero Incent</span><span class="p-tag">IPQS Shield</span><span class="p-tag">TCPA Ready</span></div>
+            </div>
+            <a href="?page=compliance" target="_blank" rel="noopener" class="btn-card-action"><span>Inspect Compliance Charter</span><span>↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proven Verticals -->
+    <section class="section" style="padding-top: 20px;">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Proven <span class="text-gold font-serif-italic">Verticals</span></h2>
+          <p>Switch between our primary industry verticals to review channel architecture and verified conversion KPIs.</p>
+        </div>
+
+        <div class="case-panel reveal">
+          <div class="tabs-bar">
+            <button class="tab-pill active" onclick="switchVertical('fintech', this)">FinTech & Insurance</button>
+            <button class="tab-pill" onclick="switchVertical('saas', this)">B2B SaaS & Software</button>
+            <button class="tab-pill" onclick="switchVertical('ecom', this)">D2C E-Commerce</button>
+            <button class="tab-pill" onclick="switchVertical('mobile', this)">Mobile Apps & Utilities</button>
+          </div>
+          <div class="case-layout">
+            <div>
+              <span style="font-size:0.76rem; color:var(--gold-400); font-weight:700; letter-spacing:0.1em;" id="vGeo">TIER-1 MARKETS • US, UK, CA</span>
+              <h3 style="font-size:1.95rem; margin: 10px 0 14px;" id="vTitle">High-Intent Financial Comparison & Lead Generation</h3>
+              <p style="color:var(--text-muted); margin-bottom:24px;" id="vDesc">Using Google Search and Native editorial comparison hubs, we pre-qualify consumers for personal finance, credit monitoring, and insurance programs with strict TCPA compliance.</p>
+              <a href="?page=case-studies" target="_blank" rel="noopener" class="btn-modern-glass" style="padding: 12px 24px; font-size:0.88rem;">Open Full Case Studies ↗</a>
+            </div>
+            <div class="kpi-grid">
+              <div class="kpi-card"><div class="num text-gold" id="k1">3.4x</div><div class="desc" id="l1">Average Client ROAS</div></div>
+              <div class="kpi-card"><div class="num" id="k2">18.6%</div><div class="desc" id="l2">Lander-to-Lead CVR</div></div>
+              <div class="kpi-card"><div class="num" id="k3">99.2%</div><div class="desc" id="l3">Traffic Quality Score</div></div>
+              <div class="kpi-card"><div class="num" id="k4">45K+</div><div class="desc" id="l4">Monthly Qualified Leads</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partner Endorsements -->
+    <section class="section" style="padding-top: 20px;">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Partner <span class="text-gold font-serif-italic">Endorsements</span></h2>
+        </div>
+
+        <div class="quotes-grid">
+          <div class="quote-box reveal">
+            <p>"Aurelia Digital consistently delivers some of the cleanest search and native traffic on our network. Their backend retention outperforms averages by 30%."</p>
+            <div class="person-meta">
+              <div class="avatar-ring">MR</div>
+              <div><div style="font-weight:700; font-size:0.94rem;">Marcus Reynolds</div><div style="font-size:0.8rem; color:var(--text-muted);">Affiliate Director, North America</div></div>
+            </div>
+          </div>
+
+          <div class="quote-box reveal">
+            <p>"Communication and compliance are effortless with their team. Whenever we need rapid creative scaling on a SaaS campaign, they execute within hours."</p>
+            <div class="person-meta">
+              <div class="avatar-ring">EC</div>
+              <div><div style="font-weight:700; font-size:0.94rem;">Elena Carter</div><div style="font-size:0.8rem; color:var(--text-muted);">Head of Partnerships, CloudScale</div></div>
+            </div>
+          </div>
+
+          <div class="quote-box reveal">
+            <p>"Zero fraud flags across 14 months of scaling our FinTech lead-gen program. Their Voluum S2S attribution and landing page quality are top-tier."</p>
+            <div class="person-meta">
+              <div class="avatar-ring">DW</div>
+              <div><div style="font-weight:700; font-size:0.94rem;">David Wu</div><div style="font-size:0.8rem; color:var(--text-muted);">VP of Growth, FinBridge</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="section" style="padding-top: 20px;">
+      <div class="container">
+        <div class="cta-banner reveal">
+          <div class="eyebrow" style="margin-bottom:20px;">New Network & Brand Partnerships Open</div>
+          <h2>Ready to Scale Clean, <span class="text-gold font-serif-italic">High-LTV</span> Volume?</h2>
+          <p>Connect directly with our media buying desk for affiliate onboarding, cap increases, or direct advertiser launches.</p>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:14px;">
+            <a href="?page=partnership" target="_blank" rel="noopener" class="btn-modern-gold">Open Partnership Portal ↗</a>
+            <a href="?page=media-kit" target="_blank" rel="noopener" class="btn-modern-glass">Download Media Kit ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-flex">
+          <div>
+            <strong style="color:#fff; font-family:'Outfit',sans-serif;">AURELIA DIGITAL LLC</strong>
+            <p style="margin-top:6px;">Institutional Performance Marketing & User Acquisition Desk.</p>
+          </div>
+          <div class="footer-nav">
+            <a href="?page=capabilities" target="_blank" rel="noopener">Capabilities ↗</a>
+            <a href="?page=case-studies" target="_blank" rel="noopener">Case Studies ↗</a>
+            <a href="?page=media-kit" target="_blank" rel="noopener">Media Kit ↗</a>
+            <a href="?page=partnership" target="_blank" rel="noopener">Partner Portal ↗</a>
+            <a href="?page=compliance" target="_blank" rel="noopener">Privacy & Compliance ↗</a>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border-subtle); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <span>© 2026 Aurelia Digital LLC. All rights reserved.</span>
+          <span>S2S Postback Enabled • Zero-Incentive Policy • Brand Safe</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= DEDICATED SUB-PAGE VIEW ================= -->
+  <div id="subpage-view">
+    <nav>
+      <div class="container nav-inner">
+        <a href="?" class="brand"><div class="brand-emblem">A</div><span>AURELIA DIGITAL</span></a>
+        <div style="display:flex; gap:12px;">
+          <a href="?" class="btn-modern-glass" style="padding:10px 20px; font-size:0.86rem;">← Back to Home</a>
+          <a href="?page=partnership" target="_blank" rel="noopener" class="btn-modern-gold" style="padding:10px 20px; font-size:0.86rem;">Partner Inquiry ↗</a>
+        </div>
+      </div>
+    </nav>
+    <div id="subpage-mount"></div>
+  </div>
+
+  <!-- ================= SPONSORED AD MODAL ON PAGE LOAD ================= -->
+  <div class="ad-interstitial-backdrop" id="sponsoredAdModal" role="dialog" aria-label="Sponsored Advertisement">
+    <div class="ad-modal-card">
+      <button class="ad-close-btn" onclick="dismissAdModal()">Skip Ad ✕</button>
+      <div class="ad-tag">Sponsored Partner Advertisement</div>
+      <h2 style="font-size:1.85rem; margin-bottom:12px; line-height:1.15;">
+        Featured <span class="text-gold font-serif-italic">Partner</span> Spotlight
+      </h2>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:26px;">
+        Explore direct advertising solutions and partner offers from our featured network sponsor.
+      </p>
+      <a href="https://auctionr.org/4/9a1f38d0a12dbfda18e8807a25343045" target="_blank" rel="noopener noreferrer" class="btn-modern-gold" style="width:100%;" onclick="dismissAdModal()">
+        Visit Sponsored Link ↗
+      </a>
+      <button onclick="dismissAdModal()" style="background:none; border:none; color:var(--text-dim); font-size:0.8rem; margin-top:16px; cursor:pointer; text-decoration:underline;">
+        Continue to Aurelia Digital
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const pages = {
+      "capabilities": {
+        title: "Capabilities — Aurelia Digital",
+        html: `<section class="subpage-hero"><div class="container"><div class="eyebrow"><span class="pulse-dot"></span> Channel Architecture</div><h1 style="font-size:clamp(2.3rem,4.5vw,3.6rem);">Full-Funnel <span class="text-gold font-serif-italic">Traffic</span> Capabilities</h1></div></section><section class="subpage-body"><div class="container sub-grid-2"><div class="spotlight-card"><h3>Google & Microsoft Search (42%)</h3><p>High-intent exact and phrase-match campaigns with strict negative brand lists and compliant landing pages.</p></div><div class="spotlight-card"><h3>Meta & TikTok Paid Social (34%)</h3><p>Creative-first scaling backed by server-side CAPI tracking and rapid UGC testing.</p></div></div></section>`
+      },
+      "media-kit": {
+        title: "Media Kit 2026 — Aurelia Digital",
+        html: `<section class="subpage-hero"><div class="container"><div class="eyebrow"><span class="pulse-dot"></span> Executive Overview</div><h1 style="font-size:clamp(2.3rem,4.5vw,3.6rem);">Agency <span class="text-gold font-serif-italic">Media Kit</span></h1></div></section><section class="subpage-body"><div class="container"><div class="form-card"><h3 style="margin-bottom:12px;">2026 Agency Specifications</h3><p style="color:var(--text-muted); margin-bottom:20px;">Annual Spend: $4.8M+ | Primary GEOs: US, UK, CA, AU | Tracking: Voluum & RedTrack S2S | Zero-Incentive Traffic.</p><button onclick="window.print()" class="btn-modern-glass">Print / Save PDF</button></div></div></section>`
+      },
+      "case-studies": {
+        title: "Case Studies — Aurelia Digital",
+        html: `<section class="subpage-hero"><div class="container"><div class="eyebrow"><span class="pulse-dot"></span> Benchmarks</div><h1 style="font-size:clamp(2.3rem,4.5vw,3.6rem);">Verified <span class="text-gold font-serif-italic">Case Studies</span></h1></div></section><section class="subpage-body"><div class="container sub-grid-2"><div class="spotlight-card"><h3>FinTech Lead Gen</h3><p>Scaled to 45K+ monthly qualified leads at 3.4x ROAS and 99.2% traffic quality score.</p></div><div class="spotlight-card"><h3>B2B SaaS Trials</h3><p>18K+ monthly activated trials with 4.1x trial-to-paid LTV ratio.</p></div></div></section>`
+      },
+      "compliance": {
+        title: "Compliance — Aurelia Digital",
+        html: `<section class="subpage-hero"><div class="container"><div class="eyebrow"><span class="pulse-dot"></span> Governance</div><h1 style="font-size:clamp(2.3rem,4.5vw,3.6rem);">Brand Safety & <span class="text-gold font-serif-italic">Compliance</span></h1></div></section><section class="subpage-body"><div class="container"><div class="form-card"><p style="color:var(--text-muted);">Aurelia Digital enforces a strict Zero-Incentive, Zero-Fraud policy. All traffic is screened via IPQS/Anura and complies with GDPR, CCPA, and TCPA guidelines.</p></div></div></section>`
+      },
+      "partnership": {
+        title: "Partner Portal — Aurelia Digital",
+        html: `<section class="subpage-hero"><div class="container"><div class="eyebrow"><span class="pulse-dot"></span> Onboarding</div><h1 style="font-size:clamp(2.3rem,4.5vw,3.6rem);">Partner With <span class="text-gold font-serif-italic">Aurelia</span></h1></div></section><section class="subpage-body"><div class="container"><div class="form-card" style="max-width:740px; margin:0 auto;"><form onsubmit="event.preventDefault(); document.getElementById('pOk').style.display='block';"><div class="f-grid"><div class="f-group"><label>Full Name *</label><input required placeholder="Johnathan Vance"></div><div class="f-group"><label>Company / Network *</label><input required placeholder="MaxBounty / Direct Brand"></div><div class="f-group full"><label>Work Email *</label><input type="email" required placeholder="name@company.com"></div><div class="f-group full"><label>Campaign Details *</label><textarea rows="3" required placeholder="Target GEOs & payout terms..."></textarea></div><div class="f-group full"><button class="btn-modern-gold" style="width:100%;">Submit Request ↗</button></div></div><div id="pOk" style="display:none; margin-top:14px; color:#34d399; text-align:center;">✓ Request submitted successfully!</div></form></div></div></section>`
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const activePage = params.get('page');
+
+    if (activePage && pages[activePage]) {
+      document.getElementById('home-view').style.display = 'none';
+      document.getElementById('subpage-view').style.display = 'block';
+      document.getElementById('subpage-mount').innerHTML = pages[activePage].html;
+      document.title = pages[activePage].title;
+    } else {
+      setTimeout(() => {
+        document.getElementById('sponsoredAdModal').classList.add('open');
+      }, 800);
+    }
+
+    function dismissAdModal() {
+      document.getElementById('sponsoredAdModal').classList.remove('open');
+    }
+
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+    });
+
+    const verticalData = {
+      fintech: { geo: "TIER-1 MARKETS • US, UK, CA", title: "High-Intent Financial Comparison & Lead Generation", desc: "Using Google Search and Native editorial comparison hubs, we pre-qualify consumers with strict TCPA compliance.", k1: "3.4x", l1: "Average Client ROAS", k2: "18.6%", l2: "Lander-to-Lead CVR", k3: "99.2%", l3: "Traffic Quality Score", k4: "45K+", l4: "Monthly Qualified Leads" },
+      saas: { geo: "GLOBAL ENGLISH • US, EU, AU", title: "B2B SaaS Free-Trial & Paid Subscription Scaling", desc: "Driving high-LTV software trials via targeted Search and YouTube review funnels optimized for retention.", k1: "4.1x", l1: "Trial-to-Paid LTV", k2: "24.2%", l2: "Landing Page Opt-In", k3: "98.8%", l3: "Retention Benchmark", k4: "18K+", l4: "Monthly Trials" },
+      ecom: { geo: "TIER-1 D2C • US, CA, UK, AU", title: "Direct-to-Consumer E-Commerce Acquisition", desc: "Scaling consumer brands through rapid UGC video creatives on Meta & TikTok.", k1: "2.9x", l1: "Blended ROAS", k2: "4.8%", l2: "Checkout CVR", k3: "99.5%", l3: "Clean Order Rate", k4: "62K+", l4: "Monthly Orders" },
+      mobile: { geo: "WORLDWIDE • iOS & ANDROID", title: "Mobile Utility, VPN & App Install Acquisition", desc: "Delivering high-volume CPI and CPA app events integrated directly with AppsFlyer and Adjust MMPs.", k1: "3.1x", l1: "Day-30 ROAS", k2: "31.5%", l2: "Install-to-Event Rate", k3: "99.4%", l3: "Anti-Fraud Pass Rate", k4: "95K+", l4: "Monthly App Installs" }
+    };
+
+    function switchVertical(key, btn) {
+      document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const d = verticalData[key];
+      document.getElementById('vGeo').textContent = d.geo;
+      document.getElementById('vTitle').textContent = d.title;
+      document.getElementById('vDesc').textContent = d.desc;
+      document.getElementById('k1').textContent = d.k1; document.getElementById('l1').textContent = d.l1;
+      document.getElementById('k2').textContent = d.k2; document.getElementById('l2').textContent = d.l2;
+      document.getElementById('k3').textContent = d.k3; document.getElementById('l3').textContent = d.l3;
+      document.getElementById('k4').textContent = d.k4; document.getElementById('l4').textContent = d.l4;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
